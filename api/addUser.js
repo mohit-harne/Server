@@ -1,5 +1,3 @@
-// api/addUser.js
-
 import mongoose from 'mongoose';
 
 const MONGO_URL = process.env.MONGO_URL;
@@ -36,7 +34,20 @@ export default async function handler(req, res) {
 
   try {
     await connectDB();
-    const newUser = new User(req.body);
+
+    // Manually parse body if needed
+    let body = req.body;
+
+    if (!body || typeof body !== 'object') {
+      const buffers = [];
+      for await (const chunk of req) {
+        buffers.push(chunk);
+      }
+      const data = Buffer.concat(buffers).toString();
+      body = JSON.parse(data);
+    }
+
+    const newUser = new User(body);
     await newUser.save();
     res.status(201).json({ message: 'User added successfully', user: newUser });
   } catch (error) {
