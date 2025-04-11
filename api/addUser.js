@@ -12,6 +12,11 @@ const connectDB = async () => {
 };
 
 const userSchema = new mongoose.Schema({
+  user_code: {
+    type: String,
+    unique: true,
+    
+  },
   first_name: String,
   email: String,
   phone: String,
@@ -35,9 +40,8 @@ export default async function handler(req, res) {
   try {
     await connectDB();
 
-    // Manually parse body if needed
+    // Parse body if necessary
     let body = req.body;
-
     if (!body || typeof body !== 'object') {
       const buffers = [];
       for await (const chunk of req) {
@@ -45,6 +49,11 @@ export default async function handler(req, res) {
       }
       const data = Buffer.concat(buffers).toString();
       body = JSON.parse(data);
+    }
+
+    // ✅ Generate user_code if missing
+    if (!body.user_code) {
+      body.user_code = `USR_${Date.now()}`;
     }
 
     const newUser = new User(body);
