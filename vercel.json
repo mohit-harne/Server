@@ -2,11 +2,13 @@
     "version": 2,
     "builds": [
       { "src": "api/getUsers.js", "use": "@vercel/node" },
-      { "src": "api/addUser.js", "use": "@vercel/node" }
+      { "src": "api/addUser.js", "use": "@vercel/node" },
+      { "src": "api/deleteUser.js", "use": "@vercel/node" }
     ],
     "routes": [
       { "src": "/getUsers", "dest": "/api/getUsers.js" },
-      { "src": "/addUser", "dest": "/api/addUser.js" }
+      { "src": "/addUser", "dest": "/api/addUser.js" },
+      { "src": "/deleteUser", "dest": "/api/deleteUser.js" }
     ]
   }
   
