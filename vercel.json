@@ -1,10 +1,12 @@
 {
     "version": 2,
     "builds": [
-      { "src": "api/getUsers.js", "use": "@vercel/node" }
+      { "src": "api/getUsers.js", "use": "@vercel/node" },
+      { "src": "api/addUser.js", "use": "@vercel/node" }
     ],
     "routes": [
-      { "src": "/getUsers", "dest": "/api/getUsers.js" }
+      { "src": "/getUsers", "dest": "/api/getUsers.js" },
+      { "src": "/addUser", "dest": "/api/addUser.js" }
     ]
   }
   
